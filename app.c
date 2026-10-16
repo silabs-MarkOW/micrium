@@ -34,21 +34,26 @@
 #include <stdio.h>
 #include "em_gpio.h"
 
-// The advertising set handle allocated from Bluetooth stack.
-static uint8_t advertising_set_handle = 0xff;
-
 void __real_LDMA_IRQHandler(void);
 void __wrap_LDMA_IRQHandler(void) {
-  //GPIO_PinOutSet(gpioPortC, 1);
-  /* __real_ */ LDMA_IRQHandler();
-  //GPIO_PinOutClear(gpioPortC, 1);
-  GPIO_PinOutToggle(gpioPortC, 1);
+  GPIO_PinOutSet(gpioPortC, 1);
+  __real_LDMA_IRQHandler();
+  GPIO_PinOutClear(gpioPortC, 1);
 }
+
+void __real_FRQ_IRQHandler(void);
+void __wrap_FRQ_IRQHandler(void) {
+  GPIO_PinOutSet(gpioPortC, 2);
+  __real_FRQ_IRQHandler();
+  GPIO_PinOutClear(gpioPortC, 2);
+}
+
 // Application Init.
 void app_init(void)
 {
   printf("%d:%s()\n",__LINE__,__PRETTY_FUNCTION__);
   GPIO_PinModeSet(gpioPortC, 1, gpioModePushPull, 0);
+  GPIO_PinModeSet(gpioPortC, 2, gpioModePushPull, 0);
 }
 
 // Application Process Action.
