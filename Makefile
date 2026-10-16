@@ -83,7 +83,7 @@ CXX_FLAGS_RELEASE =
 ASM_FLAGS         = 
 ASM_FLAGS_DEBUG   = 
 ASM_FLAGS_RELEASE = 
-LD_FLAGS          = 
+LD_FLAGS          = -Wl,--wrap=LDMA_IRQHandler -Wl,--wrap=FRQ_IRQHandler
 
 OBJS = 
 
