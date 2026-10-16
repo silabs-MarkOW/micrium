@@ -11,7 +11,6 @@ all: debug
 ####################################################################
 # Definitions                                                      #
 ####################################################################
-
 ifeq ($(OS),Windows_NT)
   USER_DIR = $(USERPROFILE)
 else
@@ -22,7 +21,7 @@ endif
 PROJECTNAME = bt_soc_empty_micriumos_2
 ARM_GCC_DIR_WIN = $(USER_DIR)/.silabs/slt/installs/conan/p/gcc-a999d2e027337f/p
 ARM_GCC_DIR_OSX = 
-ARM_GCC_DIR_LINUX = 
+ARM_GCC_DIR_LINUX = $(shell slt where gcc-arm-none-eabi)
 POST_BUILD_EXE_WIN = $(USER_DIR)/.silabs/slt/installs/archive/Simplicity Commander/commander.exe
 POST_BUILD_EXE_OSX = 
 POST_BUILD_EXE_LINUX = 
@@ -41,6 +40,11 @@ else
 		POST_BUILD_EXE ?= $(POST_BUILD_EXE_LINUX)
   endif
 endif
+
+ARM_GCC_DIR = $(shell slt where gcc-arm-none-eabi)
+
+what :
+	echo $(shell slt where gcc-arm-none-eabi)
 
 # Command output is hidden by default, it can be enabled by
 # setting VERBOSE=true on the commandline.
